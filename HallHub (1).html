@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HallHub – Smart College Hall Booking</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+:root{--navy:#101B35;--blue:#315CF5;--cyan:#64D8E5;--bg:#F5F7FB;--tx:#172033;--mu:#718096;--ln:#E3E8F2;--r:14px}
+*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',system-ui,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--tx);line-height:1.55;font-size:15px}
+button,input,select,textarea{font:inherit;color:inherit}a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.btn{border:0;border-radius:10px;padding:10px 18px;font-weight:600;cursor:pointer;background:var(--blue);color:#fff;transition:transform .15s,box-shadow .15s,background .15s;display:inline-block}
+.btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(49,92,245,.3)}
+.btn.o{background:#fff;color:var(--navy);border:1px solid var(--ln)}.btn.o:hover{box-shadow:none;background:var(--bg)}
+.btn.g{background:#16A34A}.btn.d{background:#DC2626}.btn.s{padding:6px 12px;font-size:13px}
+.btn.w{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.3)}
+.btn[disabled]{opacity:.6;cursor:wait}
+/* landing */
+nav.top{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;gap:26px;padding:14px 5%;background:rgba(16,27,53,.92);backdrop-filter:blur(10px);color:#fff}
+.logo{font-weight:800;font-size:20px;display:flex;align-items:center;gap:8px}.logo i{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--blue),var(--cyan));display:inline-block}
+nav.top .lk{display:flex;gap:22px;margin-left:auto;font-size:14px;opacity:.85}nav.top .lk a:hover{color:var(--cyan)}
+nav.top .ac{display:flex;gap:10px}
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 5% 80px;color:#fff;position:relative;overflow:hidden;
+background:linear-gradient(105deg,rgba(16,27,53,.97) 40%,rgba(16,27,53,.6)),url(https://images.unsplash.com/photo-1562774053-701939374585?w=1600) center/cover,linear-gradient(135deg,var(--navy),#1d3a8a)}
+.hero h1{font-size:clamp(38px,6vw,68px);line-height:1.05;font-weight:800;max-width:680px;letter-spacing:-.03em}
+.hero p{max-width:520px;margin:20px 0 30px;color:#c9d3ea;font-size:18px}.hero .bt{display:flex;gap:12px;flex-wrap:wrap}
+.fl{position:absolute;right:6%;display:flex;flex-direction:column;gap:16px}
+.fc{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(8px);padding:14px 20px;border-radius:14px;animation:fy 5s ease-in-out infinite}
+.fc:nth-child(2){margin-left:-40px;animation-delay:1.2s}.fc:nth-child(3){animation-delay:2.4s}.fc b{display:block;font-size:20px;color:var(--cyan)}
+@keyframes fy{50%{transform:translateY(-8px)}}
+section.s{padding:90px 5%}section.s h2{font-size:clamp(28px,4vw,40px);font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
+.sub{color:var(--mu);max-width:560px;margin-bottom:36px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px}
+.card{background:#fff;border:1px solid var(--ln);border-radius:var(--r);padding:20px}
+.hc{padding:0;overflow:hidden;transition:transform .2s,box-shadow .2s}.hc:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(16,27,53,.1)}
+.hi{height:150px;background-size:cover;background-position:center;display:flex;align-items:flex-end;padding:12px;position:relative}
+.hc .bd2{padding:18px}.hc h3{font-size:18px}.meta{color:var(--mu);font-size:13px;margin:4px 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}.chip{background:var(--bg);border-radius:20px;padding:3px 10px;font-size:12px;color:var(--mu)}
+.av{font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;background:#DCFCE7;color:#15803D}.av.x{background:#FEE2E2;color:#B91C1C}.av.y{background:#FEF3C7;color:#B45309}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:22px}
+.step b{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--navy);color:var(--cyan);margin-bottom:12px}
+.dark{background:var(--navy);color:#fff}.dark .sub{color:#9fb0d3}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;text-align:center}.stats b{font-size:44px;color:var(--cyan);display:block}
+footer{background:#0b1226;color:#9fb0d3;padding:50px 5% 24px}.fg{display:grid;grid-template-columns:2fr 1fr 1fr 1.4fr;gap:30px}footer h4{color:#fff;margin-bottom:10px}footer a{display:block;margin:5px 0}
+@media(max-width:800px){nav.top .lk{display:none}nav.top .ac{margin-left:auto}.fl{display:none}.fg{grid-template-columns:1fr 1fr}}
+.rv{opacity:0;transform:translateY(16px);transition:.6s}.rv.in{opacity:1;transform:none}
+/* modal */
+.ov{position:fixed;inset:0;background:rgba(16,27,53,.55);display:none;place-items:center;z-index:50;padding:16px;overflow:auto}
+.ov.on{display:grid}.md{background:#fff;border-radius:18px;padding:28px;width:100%;max-width:480px;animation:pop .25s ease;max-height:92vh;overflow:auto}.md.lg{max-width:620px}
+@keyframes pop{from{opacity:0;transform:scale(.96) translateY(10px)}}
+.md h3{font-size:22px;margin-bottom:4px}
+label{display:block;font-size:13px;font-weight:600;margin:12px 0 4px}
+input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--ln);border-radius:10px;background:#fff}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);outline:0;box-shadow:0 0 0 3px rgba(49,92,245,.15)}
+.er{color:#DC2626;font-size:12px;margin-top:4px;min-height:0}
+.tabs{display:flex;background:var(--bg);border-radius:10px;padding:4px;margin:14px 0}.tabs button{flex:1;border:0;background:0;padding:8px;border-radius:8px;cursor:pointer;font-weight:600;color:var(--mu)}.tabs .on{background:#fff;color:var(--blue);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.demo{background:var(--bg);border-radius:10px;padding:12px;font-size:13px;margin-top:14px}.demo button{border:1px solid var(--ln);background:#fff;border-radius:8px;padding:4px 10px;margin:4px 4px 0 0;cursor:pointer}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#toasts{position:fixed;bottom:20px;right:20px;z-index:99;display:flex;flex-direction:column;gap:8px}
+.ts{background:var(--navy);color:#fff;padding:12px 18px;border-radius:10px;border-left:4px solid var(--cyan);animation:pop .3s;box-shadow:0 8px 24px rgba(0,0,0,.2)}.ts.e{border-color:#F87171}
+/* app */
+#app{display:none;min-height:100vh}
+aside{position:fixed;left:0;top:0;bottom:0;width:250px;background:var(--navy);color:#cbd5ef;padding:22px 14px;display:flex;flex-direction:column;z-index:30;transition:transform .25s;overflow:auto}
+aside .logo{color:#fff;padding:0 10px 22px}
+aside a{display:flex;justify-content:space-between;padding:10px 14px;border-radius:10px;cursor:pointer;margin:2px 0;transition:background .15s,padding .15s}
+aside a:hover{background:rgba(255,255,255,.07);padding-left:18px}aside a.on{background:var(--blue);color:#fff}
+.nb{background:#F87171;color:#fff;border-radius:20px;font-size:11px;padding:1px 8px;font-weight:700}
+main{margin-left:250px;padding:28px 34px 60px}
+.mh{display:flex;align-items:center;gap:14px;margin-bottom:24px;flex-wrap:wrap}.mh h1{font-size:28px;font-weight:800;letter-spacing:-.02em}.mh .sp{margin-left:auto;display:flex;gap:10px;align-items:center}
+.hb{display:none;background:#fff;border:1px solid var(--ln);border-radius:8px;padding:6px 12px;cursor:pointer}
+@media(max-width:900px){aside{transform:translateX(-100%)}aside.on{transform:none}main{margin-left:0;padding:20px 16px}.hb{display:block}}
+.kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin-bottom:24px}
+.kp .card b{font-size:32px;display:block;line-height:1.1}.kp .card span{color:var(--mu);font-size:13px}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:14px}th{text-align:left;color:var(--mu);font-size:12px;font-weight:600;padding:10px;border-bottom:1px solid var(--ln)}td{padding:12px 10px;border-bottom:1px solid var(--ln);vertical-align:top}tr:hover td{background:#fafbfe}
+.bd{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}.bd:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.PENDING{background:#FEF3C7;color:#B45309}.PENDING:before{animation:pl 1.6s infinite}@keyframes pl{50%{opacity:.25}}
+.APPROVED{background:#DCFCE7;color:#15803D}.REJECTED{background:#FEE2E2;color:#B91C1C}.CANCELLED{background:#E5E7EB;color:#4B5563}.COMPLETED{background:#DBEAFE;color:#1D4ED8}
+.tb{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}.tb input,.tb select{width:auto;flex:1;min-width:150px}
+.pg{animation:pop .3s}.two{display:grid;grid-template-columns:2fr 1fr;gap:20px}@media(max-width:1000px){.two{grid-template-columns:1fr}}
+.bar{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:13px}.bar span:first-child{width:120px;flex:none}.bar i{display:block;height:10px;border-radius:6px;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .8s}.bar div{flex:1;background:var(--bg);border-radius:6px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.cal div{padding:8px 4px;text-align:center;border-radius:8px;font-size:13px;min-height:44px}
+.cal .dh{color:var(--mu);font-size:12px;min-height:0}.cal .dy{background:#fff;border:1px solid var(--ln);cursor:pointer;transition:.15s}.cal .dy:hover{border-color:var(--blue)}.cal .bk{background:#DBEAFE;border-color:#93C5FD}.cal .pa{opacity:.4;cursor:not-allowed}.cal .sel{outline:2px solid var(--blue)}
+.nt{padding:12px;border-radius:10px;border:1px solid var(--ln);margin-bottom:8px;background:#fff}.nt.u{border-left:4px solid var(--blue);background:#F4F7FF}.nt small{color:var(--mu)}
+.empty{text-align:center;color:var(--mu);padding:30px}
+.chk{display:flex;flex-wrap:wrap;gap:8px}.chk label{display:flex;gap:6px;align-items:center;font-weight:500;margin:0;background:var(--bg);padding:6px 10px;border-radius:8px}.chk input{width:auto}
+.note{padding:10px 12px;border-radius:10px;font-size:13px;margin-top:10px}.note.ok{background:#DCFCE7;color:#15803D}.note.bad{background:#FEE2E2;color:#B91C1C}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<!-- ============ LANDING ============ -->
+<div id="landing">
+<nav class="top"><a class="logo" href="#home"><i></i>HallHub</a>
+<div class="lk"><a href="#home">Home</a><a href="#halls">Explore Halls</a><a href="#features">Features</a><a href="#how">How It Works</a><a href="#about">About Us</a></div>
+<div class="ac"><button class="btn w s" onclick="auth('login')">Login</button><button class="btn s" onclick="auth('register')">Register</button></div></nav>
+<header class="hero" id="home"><div><h1>Find Your Space. Plan Your Event. Book with Ease.</h1>
+<p>HallHub simplifies college venue booking through one centralized platform. Discover halls, check availability and manage reservations effortlessly.</p>
+<div class="bt"><a class="btn" href="#halls">Explore Halls</a><button class="btn w" onclick="auth('register')">Get Started</button></div></div>
+<div class="fl"><div class="fc"><b id="hv">06+</b>Available Venues</div><div class="fc"><b>Smart Booking</b>Conflict-free scheduling</div><div class="fc"><b>Admin Verified</b>Every request reviewed</div></div></header>
+<section class="s" id="halls"><h2>Featured halls</h2><p class="sub">Six venues, from a 600-seat auditorium to a compact smart classroom.</p><div class="grid" id="lh"></div></section>
+<section class="s" id="how" style="background:#fff"><h2>How it works</h2><p class="sub">Four steps from idea to confirmed venue.</p>
+<div class="steps"><div class="step rv"><b>1</b><h3>Explore halls</h3><p class="sub">Browse capacity, facilities and live availability.</p></div><div class="step rv"><b>2</b><h3>Pick date and time</h3><p class="sub">Conflicts with approved events are flagged instantly.</p></div><div class="step rv"><b>3</b><h3>Submit a request</h3><p class="sub">Add event details and equipment needs.</p></div><div class="step rv"><b>4</b><h3>Get admin approval</h3><p class="sub">You are notified as soon as it is decided.</p></div></div></section>
+<section class="s" id="features"><h2>Everything a booking desk needs</h2><p class="sub">Built for students, faculty and administrators.</p>
+<div class="grid" id="ft"></div></section>
+<section class="s dark" id="about"><div class="stats" id="st"></div></section>
+<footer><div class="fg"><div><div class="logo" style="color:#fff"><i></i>HallHub</div><p style="margin-top:10px;max-width:300px">A smart hall booking and management system for colleges.</p></div>
+<div><h4>Quick links</h4><a href="#halls">Halls</a><a href="#how">How it works</a><a href="#features">Features</a></div>
+<div><h4>Account</h4><a href="#" onclick="auth('login');return false">Login</a><a href="#" onclick="auth('register');return false">Register</a></div>
+<div><h4>Contact</h4><p>events@hallhub.edu<br>+91 422 000 0000<br>Demo College of Engineering, Coimbatore</p></div></div>
+<p style="margin-top:30px;font-size:12px">© 2026 HallHub. Demo prototype – data is stored in your browser only.</p></footer></div>
+<!-- ============ APP SHELL ============ -->
+<div id="app"><aside id="sb"></aside><main id="mn"></main></div>
+<div class="ov" id="ov"><div class="md" id="md"></div></div><div id="toasts"></div>
+<script>
+/* ============ DATA LAYER (swap these functions for a backend API later) ============ */
+const KEY='hallhub_v1',$=s=>document.querySelector(s);
+const iso=n=>{const d=new Date();d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)};
+const today=()=>iso(0),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=d=>new Date(d+'T00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+const IMG={a:'photo-1562774053-701939374585',b:'photo-1517457373958-b7bdd4587205',c:'photo-1431540015161-0bf868a2d407',d:'photo-1497366216548-37526070297c',e:'photo-1540575467063-178a50c2df87',f:'photo-1580582932707-520aed937b7b'};
+const GR=['#315CF5,#101B35','#64D8E5,#315CF5','#101B35,#315CF5','#315CF5,#64D8E5','#1d3a8a,#64D8E5','#101B35,#64D8E5'];
+function seed(){
+const H=[['Main Auditorium','Block A, Ground Floor',600,['Projector','Stage lighting','Sound system','AC'],'Our flagship venue for convocations, cultural nights and guest lectures.'],
+['Seminar Hall 1','Block B, 1st Floor',150,['Projector','Podium mic','AC'],'Tiered seating ideal for department seminars and workshops.'],
+['Seminar Hall 2','Block B, 2nd Floor',120,['Projector','Whiteboard','AC','Wi-Fi'],'A flexible hall for paper presentations and technical talks.'],
+['Conference Room','Admin Block, 3rd Floor',30,['Video conferencing','Round table','AC','Wi-Fi'],'Boardroom setup for committee meetings and interviews.'],
+['Multipurpose Hall','Sports Complex',350,['Open floor','Sound system','Stage','Ventilation'],'Open-plan space for exhibitions, club events and indoor activities.'],
+['Smart Classroom','Block C, 2nd Floor',60,['Smart board','Projector','Recording setup','Wi-Fi'],'Digital classroom for training sessions and online guest sessions.']]
+.map((h,i)=>({id:'h'+(i+1),name:h[0],loc:h[1],cap:h[2],fac:h[3],desc:h[4],img:'https://images.unsplash.com/'+Object.values(IMG)[i]+'?w=700',g:GR[i],maint:''}));
+const U=[['u1','Aarav Kumar','student@hallhub.edu','student123','student','Computer Science','21CS014'],['u2','Dr. Meera Nair','faculty@hallhub.edu','faculty123','faculty','Electronics','FAC207'],['u3','HallHub Admin','admin@hallhub.edu','admin123','admin','Administration',''],['u4','Priya S','priya@hallhub.edu','student123','student','Mechanical','21ME032'],['u5','Prof. R. Iyer','iyer@hallhub.edu','faculty123','faculty','Computer Science','FAC118']]
+.map(u=>({id:u[0],name:u[1],email:u[2],pw:u[3],role:u[4],dept:u[5],ref:u[6],active:true}));
+const bk=(i,u,h,ev,dept,d,s,e,p,st,rs)=>({id:'HH-2026-'+(1000+i),uid:u,hall:h,event:ev,purpose:ev+' for '+dept+' department',dept,date:iso(d),start:s,end:e,pax:p,equip:['Projector'],extra:'',status:st,reason:rs||'',created:iso(d-6)});
+const B=[bk(1,'u2','h1','Tech Symposium','Electronics',3,'09:00','13:00',400,'APPROVED'),bk(2,'u1','h2','Coding Contest','Computer Science',5,'10:00','12:00',90,'PENDING'),
+bk(3,'u4','h5','Robotics Expo','Mechanical',-12,'09:00','16:00',200,'APPROVED'),bk(4,'u5','h3','AI Workshop','Computer Science',-30,'14:00','17:00',100,'APPROVED'),
+bk(5,'u1','h4','Club Meeting','Computer Science',8,'15:00','16:00',20,'REJECTED','Hall reserved for an interview panel.'),bk(6,'u2','h6','Guest Lecture','Electronics',9,'11:00','12:30',55,'PENDING'),
+bk(7,'u4','h1','Annual Day Rehearsal','Mechanical',-45,'16:00','19:00',300,'APPROVED')];
+return{halls:H,users:U,bookings:B,equip:[{n:'Projector',s:12},{n:'Podium mic',s:8},{n:'Sound system',s:3},{n:'Laptop',s:5},{n:'Recording setup',s:2}],
+notes:[{id:'n1',uid:'u3',msg:'New booking request HH-2026-1002 from Aarav Kumar.',ts:Date.now()-36e5,read:false}],sess:null}}
+let DB=JSON.parse(localStorage.getItem(KEY)||'null')||seed();
+const save=()=>localStorage.setItem(KEY,JSON.stringify(DB));
+DB.bookings.forEach(b=>{if(b.status==='APPROVED'&&b.date<today())b.status='COMPLETED'});save();
+const me=()=>DB.users.find(u=>u.id===DB.sess),hall=id=>DB.halls.find(h=>h.id===id)||{name:'(deleted hall)',cap:0,fac:[]},usr=id=>DB.users.find(u=>u.id===id)||{name:'(removed user)'};
+function notify(uid,msg){DB.notes.unshift({id:'n'+Date.now()+Math.random().toString(36).slice(2,5),uid,msg,ts:Date.now(),read:false})}
+function toast(m,e){const t=document.createElement('div');t.className='ts'+(e?' e':'');t.textContent=m;$('#toasts').append(t);setTimeout(()=>t.remove(),3200)}
+const badge=s=>`<span class="bd ${s}">${s}</span>`;
+/* ============ BUSINESS RULES ============ */
+function conflict(b,ex){return DB.bookings.find(x=>x.id!==ex&&x.hall===b.hall&&x.date===b.date&&x.status==='APPROVED'&&b.start<x.end&&b.end>x.start)}
+function validate(b){const h=DB.halls.find(x=>x.id===b.hall);
+if(!h)return'Select a hall.';if(h.maint)return'This hall is blocked for maintenance: '+h.maint;
+if(!b.date||b.date<today())return'Booking date cannot be in the past.';if(!b.start||!b.end)return'Enter start and end times.';
+if(b.end<=b.start)return'End time must be later than start time.';if(!(b.pax>0))return'Enter the expected participants.';
+if(b.pax>h.cap)return`Participants (${b.pax}) exceed the hall capacity of ${h.cap}.`;
+const c=conflict(b);if(c)return`Hall already booked ${c.start}–${c.end} (${c.id}).`;return''}
+function hallStatus(h){if(h.maint)return['Maintenance','x'];const c=DB.bookings.some(b=>b.hall===h.id&&b.date===today()&&b.status==='APPROVED');return c?['Booked today','y']:['Available','']}
+/* ============ LANDING ============ */
+function hallCard(h,role){const[s,c]=hallStatus(h);
+return`<div class="card hc"><div class="hi" style="background-image:url(${h.img}),linear-gradient(135deg,${h.g})"><span class="av ${c}">${s}</span></div><div class="bd2"><h3>${esc(h.name)}</h3><div class="meta">${esc(h.loc)} · ${h.cap} seats</div>
+<div class="chips">${h.fac.map(f=>`<span class="chip">${esc(f)}</span>`).join('')}</div>
+<button class="btn s o" onclick="detail('${h.id}')">View Details</button> ${role&&role!=='admin'?`<button class="btn s" onclick="DB.hall='${h.id}';go('book')">Book</button>`:''}</div></div>`}
+function landing(){$('#lh').innerHTML=DB.halls.map(h=>hallCard(h)).join('');
+const F=[['Real-time availability','See what is free before you ask.'],['Smart booking management','Overlaps, capacity and past dates are checked for you.'],['Admin approval','Every request is reviewed by an administrator.'],['Equipment management','Request projectors, mics and more with your booking.'],['Booking notifications','Know the moment a decision is made.'],['Booking history','Every request kept with its full status trail.']];
+$('#ft').innerHTML=F.map(f=>`<div class="card rv"><h3>${f[0]}</h3><p class="sub" style="margin:6px 0 0">${f[1]}</p></div>`).join('');
+$('#st').innerHTML=[[DB.halls.length,'Halls'],[1240,'Bookings processed'],[96,'% approved on time'],[3800,'Students & faculty']].map(s=>`<div><b data-c="${s[0]}">0</b>${s[1]}</div>`).join('');
+$('#hv').textContent=String(DB.halls.length).padStart(2,'0')+'+';
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}));document.querySelectorAll('.rv').forEach(e=>io.observe(e));
+const io2=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){count(e.target);io2.unobserve(e.target)}}));document.querySelectorAll('#st b').forEach(e=>io2.observe(e))}
+function count(el){const t=+el.dataset.c;let s=null;const f=ts=>{s=s||ts;const p=Math.min((ts-s)/900,1);el.textContent=Math.round(t*p).toLocaleString();if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
+function detail(id){const h=hall(id),u=me();openM(`<h3>${esc(h.name)}</h3><div class="meta">${esc(h.loc)} · ${h.cap} seats</div><div class="hi" style="border-radius:12px;background-image:url(${h.img}),linear-gradient(135deg,${h.g});margin:12px 0"></div><p>${esc(h.desc)}</p><div class="chips" style="margin-top:12px">${h.fac.map(f=>`<span class="chip">${esc(f)}</span>`).join('')}</div>
+<div style="display:flex;gap:10px;margin-top:10px"><button class="btn o" onclick="closeM()">Close</button><button class="btn" onclick="closeM();${u&&u.role!=='admin'?`DB.hall='${id}';go('book')`:u?`toast('Admins review requests; they do not book.',1)`:`auth('login')`}">Book this hall</button></div>`,1)}
+/* ============ MODAL + AUTH ============ */
+function openM(h,l){$('#md').className='md'+(l?' lg':'');$('#md').innerHTML=h;$('#ov').classList.add('on')}
+function closeM(){$('#ov').classList.remove('on')}
+$('#ov').addEventListener('mousedown',e=>{if(e.target.id==='ov')closeM()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM()});
+function confirmD(msg,fn){window._cf=fn;openM(`<h3>Are you sure?</h3><p class="sub" style="margin:8px 0 18px">${msg}</p><div style="display:flex;gap:10px"><button class="btn o" onclick="closeM()">Keep</button><button class="btn d" onclick="closeM();_cf()">Confirm</button></div>`)}
+let AR='student';
+function auth(mode){const reg=mode==='register';
+openM(`<h3>${reg?'Create your account':'Welcome back'}</h3><p class="sub" style="margin:4px 0 0">${reg?'Register as a student or faculty member.':'Log in to your HallHub dashboard.'}</p>
+<div class="tabs" id="rt">${(reg?['student','faculty']:['student','faculty','admin']).map(r=>`<button type="button" class="${r===AR?'on':''}" onclick="AR='${r}';auth('${mode}')">${r[0].toUpperCase()+r.slice(1)}</button>`).join('')}</div>
+<div id="af">${reg?`<label>Full name</label><input id="rn"><label>College email</label><input id="re" type="email" placeholder="name@college.edu"><div class="row2"><div><label>Department</label><input id="rd"></div><div><label>${AR==='student'?'Register number':'Faculty ID'}</label><input id="rf"></div></div>
+<div class="row2"><div><label>Password</label><input id="rp" type="password"></div><div><label>Confirm password</label><input id="rc" type="password"></div></div>`:
+`<label>College email</label><input id="le" type="email"><label>Password</label><input id="lp" type="password" onkeydown="if(event.key==='Enter')doLogin()">`}
+<div class="er" id="ae"></div><button class="btn" style="width:100%;margin-top:14px" onclick="${reg?'doReg()':'doLogin()'}">${reg?'Create account':'Log in'}</button></div>
+${reg?'':`<div class="demo"><b>Demo credentials</b> (click to fill)<br>${[['student','Student'],['faculty','Faculty'],['admin','Admin']].map(r=>{const u=DB.users.find(x=>x.role===r[0]);return u?`<button type="button" onclick="AR='${r[0]}';auth('login');$('#le').value='${u.email}';$('#lp').value='${u.pw}'">${r[1]}: ${u.email} / ${u.pw}</button>`:''}).join('')}</div>`}
+<p class="sub" style="margin:14px 0 0;font-size:13px">${reg?'Have an account?':'New here?'} <a href="#" style="color:var(--blue);font-weight:600" onclick="auth('${reg?'login':'register'}');return false">${reg?'Log in':'Register'}</a> · Demo only: data stays in this browser.</p>`)}
+function doLogin(){const u=DB.users.find(x=>x.email.toLowerCase()===$('#le').value.trim().toLowerCase()&&x.pw===$('#lp').value);
+if(!u)return $('#ae').textContent='Email or password is incorrect.';if(u.role!==AR)return $('#ae').textContent=`This account is a ${u.role} account. Choose the ${u.role} tab.`;
+if(!u.active)return $('#ae').textContent='This account is disabled. Contact the administrator.';
+DB.sess=u.id;save();closeM();enter();toast('Welcome, '+u.name.split(' ')[0])}
+function doReg(){const v=id=>$('#'+id).value.trim(),e=v('re'),er=m=>$('#ae').textContent=m;
+if(!v('rn')||!v('rd')||!v('rf'))return er('Fill in all fields.');if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e))return er('Enter a valid college email.');
+if(DB.users.some(u=>u.email.toLowerCase()===e.toLowerCase()))return er('That email is already registered.');
+if($('#rp').value.length<6)return er('Password needs at least 6 characters.');if($('#rp').value!==$('#rc').value)return er('Passwords do not match.');
+const u={id:'u'+Date.now(),name:v('rn'),email:e,pw:$('#rp').value,role:AR,dept:v('rd'),ref:v('rf'),active:true};DB.users.push(u);DB.sess=u.id;save();closeM();enter();toast('Account created')}
+function logout(){DB.sess=null;save();$('#app').style.display='none';$('#landing').style.display='block';window.scrollTo(0,0);toast('Logged out')}
+/* ============ APP SHELL + ROUTING ============ */
+const UM=[['dash','Dashboard'],['halls','Explore Halls'],['cal','Availability Calendar'],['book','New Booking'],['mine','My Bookings'],['notes','Notifications'],['profile','Profile']];
+const MENU={student:UM,faculty:UM,admin:[['dash','Overview'],['req','Booking Requests'],['mh','Manage Halls'],['mu','Manage Users'],['all','All Reservations'],['cal','Availability Calendar'],['eq','Equipment Management'],['mt','Maintenance Management'],['rep','Reports and Analytics'],['set','Settings']]};
+let PAGE='dash';
+function enter(){$('#landing').style.display='none';$('#app').style.display='block';go('dash')}
+function go(p){const u=me();if(!u)return;if(!MENU[u.role].some(m=>m[0]===p)){toast('You do not have access to that page.',1);p='dash'}
+PAGE=p;const un=DB.notes.filter(n=>n.uid===u.id&&!n.read).length,pend=DB.bookings.filter(b=>b.status==='PENDING').length;
+$('#sb').className='';$('#sb').innerHTML=`<div class="logo"><i></i>HallHub</div><div style="padding:0 10px 14px;font-size:12px">${esc(u.name)}<br><span style="color:var(--cyan)">${u.role}</span></div>`+
+MENU[u.role].map(m=>`<a class="${m[0]===p?'on':''}" onclick="go('${m[0]}')">${m[1]}${m[0]==='notes'&&un?`<span class="nb">${un}</span>`:''}${m[0]==='req'&&pend?`<span class="nb">${pend}</span>`:''}</a>`).join('')+`<a style="margin-top:auto" onclick="logout()">Logout</a>`;
+const t=MENU[u.role].find(m=>m[0]===p)[1];
+$('#mn').innerHTML=`<div class="mh"><button class="hb" onclick="$('#sb').classList.toggle('on')">☰</button><h1>${t}</h1><div class="sp">${p!=='notes'?`<button class="btn o s" onclick="go('notes')">Notifications${un?' ('+un+')':''}</button>`:''}${u.role!=='admin'&&p!=='book'?'<button class="btn s" onclick="go(\'book\')">Quick booking</button>':''}</div></div><div class="pg" id="pg"></div>`;
+$('#pg').innerHTML=PG[p](u);document.querySelectorAll('#pg [data-c]').forEach(count);window.scrollTo(0,0)}
+function table(h,rows,empty){return rows.length?`<div class="tw"><table><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${rows.join('')}</table></div>`:`<div class="empty">${empty||'Nothing here yet.'}</div>`}
+const kpi=(a)=>`<div class="kp">${a.map(k=>`<div class="card"><b data-c="${k[1]}">0</b><span>${k[0]}</span></div>`).join('')}</div>`;
+const cnt=(l,s)=>l.filter(b=>b.status===s).length;
+/* ============ PAGES ============ */
+const PG={
+dash(u){const A=u.role==='admin',L=A?DB.bookings:DB.bookings.filter(b=>b.uid===u.id);
+const K=A?[['Total halls',DB.halls.length],['Total users',DB.users.length],['Total bookings',L.length],['Pending requests',cnt(L,'PENDING')],['Approved',cnt(L,'APPROVED')],['Rejected',cnt(L,'REJECTED')]]:[['Total bookings',L.length],['Pending',cnt(L,'PENDING')],['Approved',cnt(L,'APPROVED')],['Rejected',cnt(L,'REJECTED')]];
+const rec=[...L].sort((a,b)=>b.created.localeCompare(a.created)).slice(0,5),nt=DB.notes.filter(n=>n.uid===u.id).slice(0,4);
+return`<p class="sub" style="margin-bottom:20px">${A?'Review requests and keep venues running.':`Welcome back, ${esc(u.name.split(' ')[0])}. Here is where your bookings stand.`}</p>${kpi(K)}<div class="card" style="margin-bottom:20px"><h3>Bookings by status</h3>${statBars(L)}</div>
+<div class="two"><div class="card"><h3 style="margin-bottom:10px">Recent booking activity</h3>${table(['ID','Event','Hall','Date','Status'],rec.map(b=>`<tr><td>${b.id}</td><td>${esc(b.event)}</td><td>${esc(hall(b.hall).name)}</td><td>${fmt(b.date)}</td><td>${badge(b.status)}</td></tr>`),'No bookings yet.')}</div>
+<div class="card"><h3 style="margin-bottom:10px">Notifications</h3>${nt.map(n=>`<div class="nt ${n.read?'':'u'}">${esc(n.msg)}<br><small>${new Date(n.ts).toLocaleString()}</small></div>`).join('')||'<div class="empty">All caught up.</div>'}</div></div>`},
+halls(u){window.hf=window.hf||'';return`<div class="tb"><input id="hq" placeholder="Search halls or facilities" oninput="fh()"><select id="hc" onchange="fh()"><option value="0">Any capacity</option><option value="50">50+ seats</option><option value="150">150+ seats</option><option value="300">300+ seats</option></select></div><div class="grid" id="hg">${DB.halls.map(h=>hallCard(h,u.role)).join('')}</div>`},
+cal(u){window.CM=window.CM||new Date(new Date().getFullYear(),new Date().getMonth(),1);window.CH=window.CH||DB.halls[0]?.id;return`<div class="tb"><select id="ch" onchange="CH=this.value;calR()">${DB.halls.map(h=>`<option value="${h.id}" ${h.id===CH?'selected':''}>${esc(h.name)}</option>`).join('')}</select></div><div class="two"><div class="card" id="cb"></div><div class="card" id="cd"><div class="empty">Click a day to see its bookings.</div></div></div>`},
+book(u){const h=DB.hall||'';return`<div class="card" style="max-width:760px"><div class="row2"><div><label>Your name</label><input value="${esc(u.name)}" disabled></div><div><label>Department</label><input id="bd" value="${esc(u.dept)}"></div></div>
+<label>Event name</label><input id="be"><label>Event purpose</label><textarea id="bp" rows="2"></textarea>
+<div class="row2"><div><label>Hall</label><select id="bh" onchange="chk()"><option value="">Select a hall</option>${DB.halls.map(x=>`<option value="${x.id}" ${x.id===h?'selected':''}>${esc(x.name)} (${x.cap} seats)</option>`).join('')}</select></div><div><label>Expected participants</label><input id="bn" type="number" min="1" oninput="chk()"></div></div>
+<div class="row2" style="grid-template-columns:repeat(3,1fr)"><div><label>Date</label><input id="bt" type="date" min="${today()}" onchange="chk()"></div><div><label>Start</label><input id="bs" type="time" onchange="chk()"></div><div><label>End</label><input id="bf" type="time" onchange="chk()"></div></div>
+<div id="bk"></div><label>Required equipment</label><div class="chk">${DB.equip.map(e=>`<label><input type="checkbox" value="${esc(e.n)}">${esc(e.n)}</label>`).join('')}</div>
+<label>Additional requirements</label><textarea id="bx" rows="2"></textarea><div class="er" id="be2"></div><button class="btn" id="sbm" style="margin-top:14px" onclick="submitB()">Submit request</button></div>`},
+mine(u){const q=DB.bookings.filter(b=>b.uid===u.id).sort((a,b)=>b.date.localeCompare(a.date));
+return`<div class="card">${table(['ID','Event','Hall','Date & time','Status','Details',''],q.map(b=>`<tr><td>${b.id}</td><td>${esc(b.event)}</td><td>${esc(hall(b.hall).name)}</td><td>${fmt(b.date)}<br><small>${b.start}–${b.end}</small></td><td>${badge(b.status)}</td><td>${b.reason?'<small>Reason: '+esc(b.reason)+'</small>':b.equip.length?'<small>'+esc(b.equip.join(', '))+'</small>':''}</td><td>${b.status==='PENDING'?`<button class="btn s d" onclick="cancelB('${b.id}')">Cancel</button>`:''}${['APPROVED','COMPLETED'].includes(b.status)?`<button class="btn s o" onclick="receipt('${b.id}')">Receipt & QR</button>`:''}</td></tr>`),'You have no bookings yet. Start with a new booking.')}</div>`},
+notes(u){const n=DB.notes.filter(x=>x.uid===u.id);n.forEach(x=>x.read=true);save();return`<div style="max-width:700px">${n.map(x=>`<div class="nt">${esc(x.msg)}<br><small>${new Date(x.ts).toLocaleString()}</small></div>`).join('')||'<div class="empty">No notifications.</div>'}</div>`},
+profile(u){return`<div class="card" style="max-width:520px"><div class="logo" style="justify-content:center"><i style="width:64px;height:64px;border-radius:50%"></i></div><h3 style="text-align:center;margin:10px 0">${esc(u.name)}</h3><p style="text-align:center" class="meta">${esc(u.email)} · ${u.role}${u.ref?' · '+esc(u.ref):''}</p>
+<label>Full name</label><input id="pn" value="${esc(u.name)}"><label>Department</label><input id="pd" value="${esc(u.dept)}"><div class="er" id="pe"></div><button class="btn" style="margin-top:14px" onclick="saveP()">Save profile</button></div>`},
+req(u){const q=DB.bookings.filter(b=>b.status==='PENDING');return`<div class="card">${table(['ID','Requester','Event','Hall','Date & time','Pax',''],q.map(b=>{const c=conflict(b);return`<tr><td>${b.id}</td><td>${esc(usr(b.uid).name)}<br><small>${esc(b.dept)}</small></td><td>${esc(b.event)}<br><small>${esc(b.purpose)}</small></td><td>${esc(hall(b.hall).name)}</td><td>${fmt(b.date)}<br><small>${b.start}–${b.end}</small>${c?'<br><span class="bd REJECTED">Conflict</span>':'<br><span class="bd APPROVED">Free</span>'}</td><td>${b.pax}</td><td><button class="btn s g" onclick="approve('${b.id}')">Approve</button> <button class="btn s d" onclick="rejectD('${b.id}')">Reject</button></td></tr>`}),'No pending requests.')}</div>`},
+mh(u){return`<div class="tb"><button class="btn" onclick="hallF()">Add hall</button></div><div class="card">${table(['Hall','Location','Capacity','Facilities','Status',''],DB.halls.map(h=>`<tr><td>${esc(h.name)}</td><td>${esc(h.loc)}</td><td>${h.cap}</td><td>${esc(h.fac.join(', '))}</td><td><span class="av ${hallStatus(h)[1]}">${hallStatus(h)[0]}</span></td><td><button class="btn s o" onclick="hallF('${h.id}')">Edit</button> <button class="btn s d" onclick="delH('${h.id}')">Delete</button></td></tr>`),'No halls.')}</div>`},
+mu(u){return`<div class="tb"><input id="uq" placeholder="Search by name, email or department" oninput="fu()"><select id="ur" onchange="fu()"><option value="">All roles</option><option>student</option><option>faculty</option></select></div><div class="card" id="ut"></div>`},
+all(u){return`<div class="tb"><select id="as" onchange="fa()"><option value="">All statuses</option>${['PENDING','APPROVED','REJECTED','CANCELLED','COMPLETED'].map(s=>`<option>${s}</option>`).join('')}</select><input id="aq" placeholder="Search ID, event or hall" oninput="fa()"></div><div class="card" id="at"></div>`},
+eq(u){return`<div class="tb"><input id="en" placeholder="Equipment name"><input id="es" type="number" min="0" placeholder="Stock"><button class="btn" onclick="addEq()">Add equipment</button></div><div class="card">${table(['Item','Stock','Requested (pending/approved)',''],DB.equip.map((e,i)=>`<tr><td>${esc(e.n)}</td><td>${e.s}</td><td>${DB.bookings.filter(b=>['PENDING','APPROVED'].includes(b.status)&&b.equip.includes(e.n)).length}</td><td><button class="btn s d" onclick="DB.equip.splice(${i},1);save();go('eq')">Remove</button></td></tr>`))}</div>`},
+mt(u){return`<p class="sub">Blocking a hall stops new requests. Approved bookings are not changed automatically.</p><div class="card">${table(['Hall','State','Reason',''],DB.halls.map(h=>`<tr><td>${esc(h.name)}</td><td>${h.maint?'<span class="av x">Blocked</span>':'<span class="av">Open</span>'}</td><td>${esc(h.maint)}</td><td>${h.maint?`<button class="btn s g" onclick="blockH('${h.id}',0)">Reopen</button>`:`<button class="btn s d" onclick="blockH('${h.id}',1)">Block</button>`}</td></tr>`))}</div>`},
+rep(u){const L=DB.bookings.filter(b=>!['REJECTED','CANCELLED'].includes(b.status)||1);const by=(f)=>{const o={};L.forEach(b=>{const k=f(b);o[k]=(o[k]||0)+1});return o};
+const bars=(o)=>{const m=Math.max(1,...Object.values(o));return Object.entries(o).map(([k,v])=>`<div class="bar"><span>${esc(k)}</span><div><i style="width:${v/m*100}%"></i></div><b>${v}</b></div>`).join('')||'<div class="empty">No data.</div>'};
+const mo=by(b=>b.date.slice(0,7));const mk=Object.keys(mo).sort();const o2={};mk.forEach(k=>o2[k]=mo[k]);
+return`<div class="two" style="grid-template-columns:1fr 1fr"><div class="card"><h3>Monthly bookings</h3>${bars(o2)}</div><div class="card"><h3>Department-wise bookings</h3>${bars(by(b=>b.dept))}</div><div class="card"><h3>Most booked halls</h3>${bars(by(b=>hall(b.hall).name))}</div><div class="card"><h3>Status trend</h3>${bars(by(b=>b.status))}</div></div>`},
+set(u){return`<div class="card" style="max-width:520px"><h3>Prototype data</h3><p class="sub" style="margin:6px 0 14px">Data lives in this browser only (localStorage). Reset restores the original demo accounts, halls and bookings.</p><button class="btn d" onclick="confirmD('Reset all demo data? Your changes will be lost.',()=>{localStorage.removeItem(KEY);location.reload()})">Reset demo data</button></div>`}};
+/* ============ ACTIONS ============ */
+function fh(){const q=$('#hq').value.toLowerCase(),c=+$('#hc').value,u=me();const r=DB.halls.filter(h=>h.cap>=c&&(h.name+h.loc+h.fac.join()).toLowerCase().includes(q));$('#hg').innerHTML=r.map(h=>hallCard(h,u.role)).join('')||'<div class="empty">No halls match your search.</div>'}
+function calR(){const m=CM,y=m.getFullYear(),mo=m.getMonth(),first=new Date(y,mo,1).getDay(),n=new Date(y,mo+1,0).getDate();let c='';
+for(let i=0;i<first;i++)c+='<div></div>';
+for(let d=1;d<=n;d++){const ds=`${y}-${String(mo+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`,has=DB.bookings.some(b=>b.hall===CH&&b.date===ds&&b.status==='APPROVED');c+=`<div class="dy ${has?'bk':''} ${ds<today()?'pa':''}" onclick="calD('${ds}')">${d}${has?'<br><small>Booked</small>':''}</div>`}
+$('#cb').innerHTML=`<div class="tb" style="justify-content:space-between;align-items:center"><button class="btn s o" onclick="CM=new Date(${y},${mo-1},1);calR()">‹</button><b>${m.toLocaleString('en',{month:'long',year:'numeric'})}</b><button class="btn s o" onclick="CM=new Date(${y},${mo+1},1);calR()">›</button></div><div class="cal">${'SMTWTFS'.split('').map(x=>`<div class="dh">${x}</div>`).join('')}${c}</div>`}
+function calD(d){const L=DB.bookings.filter(b=>b.hall===CH&&b.date===d&&['APPROVED','COMPLETED'].includes(b.status));$('#cd').innerHTML=`<h3>${fmt(d)}</h3>${hall(CH).maint?'<div class="note bad">Blocked for maintenance.</div>':''}${L.map(b=>`<div class="nt">${b.start}–${b.end}<br><b>${esc(b.event)}</b> ${badge(b.status)}</div>`).join('')||'<div class="empty">Free all day.</div>'}`}
+function readB(){return{hall:$('#bh').value,date:$('#bt').value,start:$('#bs').value,end:$('#bf').value,pax:+$('#bn').value}}
+function chk(){const b=readB(),el=$('#bk');let h='';
+if(b.hall&&b.date&&b.start&&b.end){const e=validate(b);h=e?`<div class="note bad">${esc(e)}</div>`:'<div class="note ok">This slot is currently free. Admin approval is still required.</div>'}
+if(b.pax>0&&b.date>=today()&&b.start&&b.end>b.start){const r=DB.halls.filter(x=>!x.maint&&x.cap>=b.pax&&!conflict({...b,hall:x.id})).sort((a,c)=>a.cap-c.cap).slice(0,3);
+h+=r.length?`<div class="note" style="background:var(--bg)"><b>Recommended for ${b.pax} people:</b> ${r.map(x=>`<a href="#" style="color:var(--blue);font-weight:600;margin-right:10px" onclick="$('#bh').value='${x.id}';chk();return false">${esc(x.name)}</a>`).join('')}</div>`:'<div class="note bad">No hall is free for that size and time.</div>'}
+el.innerHTML=h}
+function submitB(){const u=me(),b=readB(),er=m=>{$('#be2').textContent=m};
+if(!$('#bd').value.trim()||!$('#be').value.trim()||!$('#bp').value.trim())return er('Fill in department, event name and purpose.');
+const e=validate(b);if(e)return er(e);er('');const btn=$('#sbm');btn.disabled=true;btn.textContent='Submitting…';
+setTimeout(()=>{const id='HH-'+new Date().getFullYear()+'-'+(1000+DB.bookings.length+1+Math.floor(Math.random()*9));
+DB.bookings.push({id,uid:u.id,...b,event:$('#be').value.trim(),purpose:$('#bp').value.trim(),dept:$('#bd').value.trim(),equip:[...document.querySelectorAll('.chk input:checked')].map(x=>x.value),extra:$('#bx').value.trim(),status:'PENDING',reason:'',created:today()});
+DB.users.filter(x=>x.role==='admin').forEach(a=>notify(a.id,`New booking request ${id} from ${u.name}.`));notify(u.id,`Request ${id} submitted and is pending admin review.`);DB.hall='';save();toast('Request '+id+' submitted');go('mine')},500)}
+function cancelB(id){confirmD('Cancel this booking request?',()=>{const b=DB.bookings.find(x=>x.id===id);if(b&&b.status==='PENDING'&&b.uid===DB.sess){b.status='CANCELLED';notify(b.uid,`Request ${id} was cancelled.`);save();toast('Request cancelled');go('mine')}})}
+function saveP(){const u=me(),n=$('#pn').value.trim(),d=$('#pd').value.trim();if(!n||!d)return $('#pe').textContent='Name and department are required.';u.name=n;u.dept=d;save();toast('Profile saved');go('profile')}
+function approve(id){if(me().role!=='admin')return toast('Only admins can approve.',1);const b=DB.bookings.find(x=>x.id===id),h=hall(b.hall);
+if(h.maint)return toast('Hall is blocked for maintenance.',1);const c=conflict(b,id);if(c)return toast(`Cannot approve: overlaps ${c.id} (${c.start}–${c.end}).`,1);
+b.status='APPROVED';notify(b.uid,`Your booking ${id} for ${h.name} on ${fmt(b.date)} was approved and confirmed.`);save();toast('Booking approved');go('req')}
+function rejectD(id){openM(`<h3>Reject ${id}</h3><label>Reason (required)</label><textarea id="rr" rows="3"></textarea><div class="er" id="re2"></div><div style="display:flex;gap:10px;margin-top:14px"><button class="btn o" onclick="closeM()">Back</button><button class="btn d" onclick="reject('${id}')">Reject request</button></div>`)}
+function reject(id){if(me().role!=='admin')return;const r=$('#rr').value.trim();if(!r)return $('#re2').textContent='Enter a reason for rejection.';const b=DB.bookings.find(x=>x.id===id);b.status='REJECTED';b.reason=r;notify(b.uid,`Your booking ${id} was rejected. Reason: ${r}`);save();closeM();toast('Booking rejected');go('req')}
+function hallF(id){const h=id?hall(id):{name:'',loc:'',cap:'',fac:[],desc:'',img:''};openM(`<h3>${id?'Edit':'Add'} hall</h3><label>Name</label><input id="fn" value="${esc(h.name)}"><label>Location</label><input id="fl" value="${esc(h.loc)}"><div class="row2"><div><label>Capacity</label><input id="fc" type="number" min="1" value="${h.cap}"></div><div><label>Image URL (optional)</label><input id="fi" value="${esc(h.img)}"></div></div><label>Facilities (comma separated)</label><input id="ff" value="${esc(h.fac.join(', '))}"><label>Description</label><textarea id="fd" rows="2">${esc(h.desc)}</textarea><div class="er" id="fe"></div><div style="display:flex;gap:10px;margin-top:14px"><button class="btn o" onclick="closeM()">Cancel</button><button class="btn" onclick="saveH('${id||''}')">Save hall</button></div>`)}
+function saveH(id){const n=$('#fn').value.trim(),l=$('#fl').value.trim(),c=+$('#fc').value;if(!n||!l||!(c>0))return $('#fe').textContent='Name, location and a capacity above 0 are required.';
+const d={name:n,loc:l,cap:c,fac:$('#ff').value.split(',').map(x=>x.trim()).filter(Boolean),desc:$('#fd').value.trim(),img:$('#fi').value.trim()};
+if(id)Object.assign(hall(id),d);else DB.halls.push({id:'h'+Date.now(),g:GR[DB.halls.length%6],maint:'',...d});save();closeM();toast('Hall saved');go('mh')}
+function delH(id){confirmD('Delete this hall? Existing bookings keep their record.',()=>{DB.halls=DB.halls.filter(h=>h.id!==id);save();toast('Hall deleted');go('mh')})}
+function blockH(id,on){if(on){const r=prompt('Reason for maintenance block?');if(!r||!r.trim())return toast('A reason is required.',1);hall(id).maint=r.trim()}else hall(id).maint='';save();go('mt')}
+function addEq(){const n=$('#en').value.trim(),s=+$('#es').value;if(!n||s<0||$('#es').value==='')return toast('Enter a name and stock.',1);DB.equip.push({n,s});save();go('eq')}
+function fu(){const q=$('#uq').value.toLowerCase(),r=$('#ur').value;$('#ut').innerHTML=table(['Name','Email','Role','Department','Status',''],DB.users.filter(u=>u.role!=='admin'&&(!r||u.role===r)&&(u.name+u.email+u.dept).toLowerCase().includes(q)).map(u=>`<tr><td>${esc(u.name)}</td><td>${esc(u.email)}</td><td>${u.role}</td><td>${esc(u.dept)}</td><td>${u.active?'<span class="av">Active</span>':'<span class="av x">Disabled</span>'}</td><td><button class="btn s o" onclick="togU('${u.id}')">${u.active?'Disable':'Enable'}</button></td></tr>`),'No users match.')}
+function togU(id){const u=usr(id);u.active=!u.active;save();fu();toast('Account '+(u.active?'enabled':'disabled'))}
+function fa(){const s=$('#as').value,q=$('#aq').value.toLowerCase();$('#at').innerHTML=table(['ID','Requester','Event','Hall','Date','Status'],DB.bookings.filter(b=>(!s||b.status===s)&&(b.id+b.event+hall(b.hall).name).toLowerCase().includes(q)).sort((a,b)=>b.date.localeCompare(a.date)).map(b=>`<tr><td>${b.id}</td><td>${esc(usr(b.uid).name)}</td><td>${esc(b.event)}</td><td>${esc(hall(b.hall).name)}</td><td>${fmt(b.date)} <small>${b.start}–${b.end}</small></td><td>${badge(b.status)}</td></tr>`),'No reservations match.')}
+function statBars(L){const o={};['PENDING','APPROVED','REJECTED','CANCELLED','COMPLETED'].forEach(k=>o[k]=cnt(L,k));const m=Math.max(1,...Object.values(o));return Object.entries(o).map(([k,v])=>`<div class="bar"><span>${k}</span><div><i style="width:${v/m*100}%"></i></div><b>${v}</b></div>`).join('')}
+const qrTxt=b=>`HALLHUB|${b.id}|${b.hall}|${b.date}|${b.start}-${b.end}`;
+function receipt(id){const b=DB.bookings.find(x=>x.id===id),h=hall(b.hall);openM(`<h3>Booking confirmed</h3><div class="meta">${b.id}</div><div id="qr" style="margin:12px 0"></div><p><b>${esc(b.event)}</b><br>${esc(h.name)}, ${esc(h.loc)}<br>${fmt(b.date)} · ${b.start}–${b.end} · ${b.pax} participants</p><div style="display:flex;gap:10px;margin-top:14px"><button class="btn o" onclick="closeM()">Close</button><button class="btn" onclick="dlRec('${id}')">Download receipt</button></div>`);
+if(window.QRCode)new QRCode($('#qr'),{text:qrTxt(b),width:140,height:140});else $('#qr').textContent=qrTxt(b)}
+function dlRec(id){const b=DB.bookings.find(x=>x.id===id),h=hall(b.hall),c=$('#qr canvas'),i=$('#qr img'),q=c?c.toDataURL():i?i.src:'';
+const t=`<!DOCTYPE html><meta charset="utf-8"><title>Receipt ${b.id}</title><body style="font-family:Arial;max-width:480px;margin:40px auto;border:2px solid #101B35;border-radius:12px;padding:28px"><h2 style="color:#101B35;margin:0">HallHub booking receipt</h2><p style="color:#315CF5;font-weight:bold">CONFIRMED · ${b.id}</p><p><b>Event:</b> ${esc(b.event)}<br><b>Hall:</b> ${esc(h.name)} (${esc(h.loc)})<br><b>Date:</b> ${fmt(b.date)}<br><b>Time:</b> ${b.start}–${b.end}<br><b>Requested by:</b> ${esc(usr(b.uid).name)} (${esc(b.dept)})<br><b>Participants:</b> ${b.pax}<br><b>Equipment:</b> ${esc(b.equip.join(', ')||'None')}</p>${q?`<img src="${q}" width="140">`:''}<p style="font-size:12px;color:#718096">Demo prototype receipt. Show this at the venue.</p>`;
+const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/html'}));a.download='HallHub-Receipt-'+b.id+'.html';a.click();toast('Receipt downloaded')}
+/* wrap pages that need initial fill after render */
+['mu','all','cal'].forEach(k=>{const f=PG[k];PG[k]=u=>{const h=f(u);setTimeout(()=>{k==='mu'?fu():k==='all'?fa():(calR())},0);return h}});
+/* ============ INIT ============ */
+landing();if(me())enter();
+</script></body></html>
